@@ -16,7 +16,7 @@ The idea is to help the person who want to memorize the quran to become truly me
 - Creating Design of Page using HTML and CSS
 - Register and Learning how to deploy containerized images to Google Cloud
 - ExpressJS with NodeJS
-- [x] ....
+- ....
 
 ### Features
  - [x] Visualization of quran in pages
