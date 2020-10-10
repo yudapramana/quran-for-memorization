@@ -3,16 +3,16 @@ const BodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
 const path = require('path');
+require('dotenv').config()
 
-// Constants
-// const PORT = 8080;
-// const HOST = '0.0.0.0';
+// const PORT = process.env.PORTCLOUD;
+// const HOST = process.env.HOSTCLOUD;
 
-const PORT = 3000;
-const HOST = 'localhost';
+const PORT = process.env.PORTDEV;
+const HOST = process.env.HOST;
 
-const CONNECTION_URL = "mongodb+srv://yudapramana:palisotabracteosa772@cluster0.ui7dx.gcp.mongodb.net/quran_memorizations?retryWrites=true&w=majority";
-const DATABASE_NAME = "quran_memorizations";
+const CONNECTION_URL = process.env.DATABASE_HOST;
+const DATABASE_NAME = process.env.DATABASE_NAME;
 
 var app = Express();
 var cookieParser = require('cookie-parser');
