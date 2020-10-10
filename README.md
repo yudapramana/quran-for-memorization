@@ -2,7 +2,7 @@
 
 Leasure-time learning project focus on creating digital quran for visual type person to memorize Al-Quran
 
-## Deployed in: Containerized docker images on Google Cloud.
+## Deployed in: Containerized docker images on Google Cloud. [https://qfm-api-jg7quhb4cq-as.a.run.app]
 
 ### Introduction
 This project idea came up to my mind as I am on the proccess memorizing Al-Quran by becoming a member of community group of Memorizers [STUAH]. STUAH is a community of Quran Memorizer from the Indonesia who wants to expand the sum of people who can memorize and recite Quran. The community created by Ustadz Adi Hidayat Lc., M.A.
