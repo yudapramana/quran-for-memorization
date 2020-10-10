@@ -1,0 +1,134 @@
+dikak {
+    color:black;
+    font-size: 9px;
+    border: 1px solid black;
+    border-radius: 1cm;
+    width: 0.5cm;
+    height: 0.5cm;
+    text-align:center;
+    box-align:center;
+    /* padding-top: 100%; */
+}
+
+.top-style {
+    border: 1px solid #a9a034;
+    border-radius: 5px;
+    font-size: 10px;
+    padding:3px;
+    display: inline-block;
+    width: 60%;
+}
+
+dikak:hover {
+    background-color: cornflowerblue;
+    color:whitesmoke;
+}
+
+dikak:active {
+    background-color: crimson;
+    color:whitesmoke;
+}
+
+dikak[position="0"]{
+    position:absolute;
+    left: 1%;
+}
+
+dikak[position="5"]{
+    position:absolute;
+    left: 5%;
+}
+
+dikak[position="10"]{
+    position:absolute;
+    left: 10%;
+}
+
+dikak[position="15"]{
+    position:absolute;
+    left: 15%;
+}
+
+dikak[position="20"]{
+    position:absolute;
+    left: 20%;
+}
+
+dikak[position="25"]{
+    position:absolute;
+    left: 25%;
+}
+
+dikak[position="30"]{
+    position:absolute;
+    left: 30%;
+}
+
+dikak[position="35"]{
+    position:absolute;
+    left: 35%;
+}
+
+dikak[position="40"]{
+    position:absolute;
+    left: 40%;
+}
+
+dikak[position="45"]{
+    position:absolute;
+    left: 45%;
+}
+
+dikak[position="50"]{
+    position:absolute;
+    left: 50%;
+}
+
+dikak[position="55"]{
+    position:absolute;
+    left: 55%;
+}
+
+dikak[position="60"]{
+    position:absolute;
+    left: 60%;
+}
+
+dikak[position="65"]{
+    position:absolute;
+    left: 65%;
+}
+
+dikak[position="70"]{
+    position:absolute;
+    left: 70%;
+}
+dikak[position="75"]{
+    position:absolute;
+    left: 75%;
+}
+
+dikak[position="80"]{
+    position:absolute;
+    left: 80%;
+}
+
+dikak[position="85"]{
+    position:absolute;
+    left: 85%;
+}
+
+dikak[position="90"]{
+    position:absolute;
+    left: 90%;
+}
+
+dikak[position="95"]{
+    position:absolute;
+    left: 95%;
+}
+
+dikak[position="100"]{
+    position:absolute;
+    left: 95%;
+}

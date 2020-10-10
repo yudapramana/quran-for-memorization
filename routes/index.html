@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Quran for Memorizer</title>
+
+    <link rel="stylesheet" href="Hafalan.css">
+	<link rel="stylesheet" href="Dikak.css">
+	<link rel="stylesheet" href="Arrow.css">
+	<link rel="stylesheet" href="loader.css">
+  </head>
+
+	
+	<body>
+		<div class="row tocenter">
+			<div class="loader">Loading...</div>
+		</div>
+		
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- Sweet Alert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+	<script type="text/javascript">
+		// Declare initialPage
+		var initialPage;
+
+		// Cookies
+		function getCookie(name) {
+			var dc = document.cookie;
+			var prefix = name + "=";
+			var begin = dc.indexOf("; " + prefix);
+			if (begin == -1) {
+				begin = dc.indexOf(prefix);
+				if (begin != 0) return null;
+			}
+			else
+			{
+				begin += 2;
+				var end = document.cookie.indexOf(";", begin);
+				if (end == -1) {
+				end = dc.length;
+				}
+			}
+			// because unescape has been deprecated, replaced with decodeURI
+			//return unescape(dc.substring(begin + prefix.length, end));
+			return decodeURI(dc.substring(begin + prefix.length, end));
+		} 
+
+	
+		$(document).ready(function() {
+			console.log('screen.width: '+screen.width);
+			console.log('screen.height: '+screen.height);
+
+			if (screen.width <= 1024) {
+				document.body.style.zoom = '60%';
+			} else if (screen.width <= 1280){
+				document.body.style.zoom = '80%';
+			} else if (screen.width <= 1440){
+				document.body.style.zoom = '90%';
+			}
+
+			var pageidcookie = getCookie("page_id");
+			console.log(pageidcookie);
+
+			if (pageidcookie == null) {
+				initialPage = 1;
+				runSource(initialPage);
+			}
+			else {
+				initialPage = parseInt(pageidcookie);
+				runSource(pageidcookie);
+			}
+
+		});
+
+		//English to Arabic digits.
+		String.prototype.EntoAr= function() {
+		  return this.replace(/\d/g, d =>  '٠١٢٣٤٥٦٧٨٩'[d])
+		}
+
+		var cloudPage;
+		function getSource(page) {
+			var url = "/page/"+page;
+			
+			return $.ajax({
+				type:  'GET',
+				async: true,
+				url:   url,
+				dataType: "json"
+			});
+		}
+
+		var ajaxing = null;
+		var latlng = null;
+		function runSource(page) {
+
+			document.body.innerHTML = '<div class="row tocenter">\
+											<div class="loader">Loading...</div>\
+										</div>';
+
+			
+
+			getSource(page).done(function(result) {
+
+				document.body.innerHTML = '';
+
+				ajaxing = result;
+				console.log(ajaxing);
+
+				// Create Page
+				var page = document.createElement("page");
+				page.setAttribute('size', ajaxing.size);
+
+				// Create Heading
+				var heading = document.createElement("heading");
+				heading.setAttribute('class', 'row mt-2');
+
+				// Create Header Div
+				var hleft = document.createElement("div");
+				hleft.setAttribute('class', 'col-md-6 col-sm-6 col-6  text-center');
+				var juz = document.createElement("span");
+				juz.setAttribute('class', 'top-style');
+				juz.textContent = "Juz "+ajaxing.juz;
+				hleft.appendChild(juz);
+
+				var hright = document.createElement("div");
+				hright.setAttribute('class', 'col-md-6 col-sm-6 col-6  text-center');
+				var surah = document.createElement("span");
+				surah.setAttribute('class', 'top-style');
+				surah.textContent = ajaxing.surah_id + '. ' +ajaxing.surah;
+				hright.appendChild(surah);
+
+				heading.appendChild(hleft);
+				heading.appendChild(hright);
+
+				// Append Heading to Page
+				page.appendChild(heading);
+
+				// Create Container
+				var container = document.createElement("container");
+				page.appendChild(container);
+
+				// Main Ayat
+				var data = ajaxing.data;
+
+				// Display Ayat
+				// console.log('i :'+i+',  data.idx: '+data[temp].idx+' temp: '+temp);
+
+				if(ajaxing.size == 'small'){
+
+					var temp = 0;
+					for (i = 1; i <= 7; i++) {
+						var baris = document.createElement("baris");
+						baris.setAttribute('class', 'row');
+						if(i == 1 ){
+							baris.setAttribute('type', "top");
+						}
+						
+						if(  typeof(data[temp]) == 'undefined' ){
+							container.appendChild(baris);
+						} else {
+
+							if(i == data[temp].idx){
+								for(j = 0; j < data[temp].position.length; j++){
+									var dikak = document.createElement("dikak");
+									dikak.setAttribute("position", data[temp].position[j]);
+									dikak.setAttribute("style", "cursor: pointer;");
+									dikak.setAttribute("class", "clickabledikak");
+									dikak.setAttribute("data-ayatid", data[temp].content[j]);
+									dikak.setAttribute("data-surahid", ajaxing.surah_id);
+									var content = data[temp].content[j].toLocaleString('ar-EG');
+									dikak.textContent = content;
+									// Append to baris
+									baris.appendChild(dikak);
+								}
+
+								temp++;
+								container.appendChild(baris);
+							} else {
+								container.appendChild(baris);
+							}
+						}
+
+					}
+					
+				} else {
+
+					var temp = 0;
+					for (i = 1; i <= 15; i++) {
+						var baris = document.createElement("baris");
+						if(i == 1 ){
+							baris.setAttribute('type', "top");
+						}
+						
+						if(  typeof(data[temp]) == 'undefined' ){
+							container.appendChild(baris);
+						} else {
+
+							if(i == data[temp].idx){
+								for(j = 0; j < data[temp].position.length; j++){
+									var dikak = document.createElement("dikak");
+									dikak.setAttribute('position', data[temp].position[j]);
+									dikak.setAttribute("style", "cursor: pointer;");
+									dikak.setAttribute("class", "clickabledikak");
+									dikak.setAttribute("data-ayatid", data[temp].content[j]);
+									dikak.setAttribute("data-surahid", ajaxing.surah_id);
+									var content = data[temp].content[j].toLocaleString('ar-EG');
+									dikak.textContent = content;
+									baris.appendChild(dikak);
+								}
+
+								temp++;
+								container.appendChild(baris);
+							} else {
+								container.appendChild(baris);
+							}
+						}
+
+					}
+
+				}
+
+
+				// Create Footing
+				var footing = document.createElement("footing");
+				footing.setAttribute('class', 'row mb-2');
+
+				// Create Header Sub Next
+				var next = document.createElement("div");
+				next.setAttribute('class', 'col-md-4 col-sm-4 col-4 button-footer text-left');
+				var bnext = document.createElement("button");
+				bnext.setAttribute('class', 'button-footer next btn');
+				bnext.setAttribute('type', 'button');
+				bnext.setAttribute('id', 'next');
+				bnext.innerHTML = "❮";
+				next.appendChild(bnext);
+
+				// Create Header Sub Next
+				var mid = document.createElement("div");
+				mid.setAttribute('class', 'col-md-4 col-sm-4 col-4 text-center');
+				var mspan = document.createElement("span");
+				mspan.setAttribute('style', 'line-height: 1cm;');
+				mspan.textContent = ajaxing.page_id.toLocaleString('ar-EG');
+				mid.appendChild(mspan);
+
+				// Create Header Sub Previous
+				var previous = document.createElement("div");
+				previous.setAttribute('class', 'col-md-4 col-sm-4 col-4 button-footer text-right');
+				var bprevious = document.createElement("button");
+				bprevious.setAttribute('class', 'button-footer previous btn');
+				bprevious.setAttribute('type', 'button');
+				bprevious.setAttribute('id', 'previous');
+				bprevious.innerHTML = "❯";
+				previous.appendChild(bprevious);
+
+
+				// Append Footer
+				footing.appendChild(next);
+				footing.appendChild(mid);
+				footing.appendChild(previous);
+
+				// Append Footing to Page
+				page.appendChild(footing);
+
+
+				// Loader
+				var row = document.createElement("div");
+				row.setAttribute('class', 'row tocenter');
+
+				var loader = document.createElement("div");
+				loader.setAttribute('class', 'loader');
+				loader.innerHTML = "Loading...";
+
+				row.appendChild(loader);
+
+				document.body.appendChild(page);
+				setTimeout(()=> page.classList.add("animate"), 10);
+				document.body.appendChild(row);
+				row.setAttribute('style', 'display: none');
+				
+
+
+				
+
+				$('.next').click(function () {
+					console.log('next clicked')
+					initialPage += 1;
+					console.log(initialPage);
+					runSource(initialPage);
+				});
+
+				$('.previous').click(function () {
+					console.log('previous clicked')
+					
+					if(initialPage > 0) {
+						initialPage -= 1;
+						console.log(initialPage);
+						runSource(initialPage);
+					}
+				});
+
+				$(".clickabledikak").click(function(){
+					var ayatid = $(this).data('ayatid');
+					var surahid = $(this).data('surahid');
+					console.log('I go a click, returned ayatid: '+surahid+":"+ayatid );
+
+					row.setAttribute('style', 'display: block');
+
+					$.ajax({
+						type:  'GET',
+						async: true,
+						url:   "https://api.alquran.cloud/v1/ayah/"+surahid+":"+ayatid,
+						dataType: "json"
+					}).done(function(result){
+						row.setAttribute('style', 'display: none');
+
+						var ayat = result;
+						var text = ayat.data.text;
+
+						// Swal.fire({
+						// 	text: text,
+						// });
+
+						Swal.fire({
+							width: 700,
+							html: "<h2>Q.S "+ajaxing.surah+": "+ayatid+"</h2>\
+							<h3>"+text+"</h3>",
+							showCloseButton: true,
+							showConfirmButton: false,
+						});
+
+					});
+				});
+			
+
+			}).fail(function() {
+				console.log("Error getting Data References!!!");
+			});
+
+		}
+
+		document.onkeydown = function(e) {
+			switch(e.which) {
+				case 37: // left
+					console.log('next clicked')
+					initialPage += 1;
+					console.log(initialPage);
+					runSource(initialPage);
+				break;
+
+				case 39: // right
+					if((initialPage - 1) > 0) {
+						initialPage -= 1;
+						console.log(initialPage);
+						runSource(initialPage);
+					}
+				break;
+
+				default: return; // exit this handler for other keys
+			}
+			e.preventDefault(); // prevent the default action (scroll / move caret)
+		};
+
+
+
+		
+
+		
+
+		
+
+
+
+    </script>
+  </body>
+</html>
