@@ -75,7 +75,6 @@
 			}
 
 			var pageidcookie = getCookie("page_id");
-			console.log(pageidcookie);
 
 			if (pageidcookie == null) {
 				initialPage = 1;
@@ -120,7 +119,7 @@
 				document.body.innerHTML = '';
 
 				ajaxing = result;
-				console.log(ajaxing);
+				// console.log(ajaxing);
 
 				// Create Page
 				var page = document.createElement("page");
@@ -298,9 +297,9 @@
 				
 
 				$('.next').click(function () {
-					console.log('next clicked')
+					// console.log('next clicked')
 					initialPage += 1;
-					console.log(initialPage);
+					// console.log(initialPage);
 					runSource(initialPage);
 				});
 
@@ -309,7 +308,7 @@
 					
 					if(initialPage > 0) {
 						initialPage -= 1;
-						console.log(initialPage);
+						// console.log(initialPage);
 						runSource(initialPage);
 					}
 				});
@@ -317,7 +316,7 @@
 				$(".clickabledikak").click(function(){
 					var ayatid = $(this).data('ayatid');
 					var surahid = $(this).data('surahid');
-					console.log('I go a click, returned ayatid: '+surahid+":"+ayatid );
+					// console.log('I go a click, returned ayatid: '+surahid+":"+ayatid );
 
 					row.setAttribute('style', 'display: block');
 
@@ -357,16 +356,16 @@
 		document.onkeydown = function(e) {
 			switch(e.which) {
 				case 37: // left
-					console.log('next clicked')
+					// console.log('next clicked')
 					initialPage += 1;
-					console.log(initialPage);
+					// console.log(initialPage);
 					runSource(initialPage);
 				break;
 
 				case 39: // right
 					if((initialPage - 1) > 0) {
 						initialPage -= 1;
-						console.log(initialPage);
+						// console.log(initialPage);
 						runSource(initialPage);
 					}
 				break;

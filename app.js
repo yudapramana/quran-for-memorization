@@ -5,11 +5,11 @@ const ObjectId = require("mongodb").ObjectID;
 const path = require('path');
 require('dotenv').config()
 
-// const PORT = process.env.PORTCLOUD;
-// const HOST = process.env.HOSTCLOUD;
+const PORT = process.env.PORTCLOUD;
+const HOST = process.env.HOSTCLOUD;
 
-const PORT = process.env.PORTDEV;
-const HOST = process.env.HOST;
+// const PORT = process.env.PORTDEV;
+// const HOST = process.env.HOST;
 
 const CONNECTION_URL = process.env.DATABASE_HOST;
 const DATABASE_NAME = process.env.DATABASE_NAME;
